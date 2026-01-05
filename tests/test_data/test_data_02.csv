@@ -1,0 +1,6 @@
+Group,Block,Trial,Type,Target_Response,Sound_1,Sound_2,Condition,Root,Message,Response
+A,Examples_1,1,example,diff,C4_Tele_b531m.wav,C4_Tele_b531.wav,Tele,C4,You will first hear some examples of the sounds used in this study. You may adjust the sound output to a comfortable level if needed.\n\nThe correct answer will be indicated in orange. Please click on the correct answer and then the continue button to proceed!,diff
+A,Examples_1,2,example,same,C4_Tele_a315.wav,C4_Tele_a315.wav,Tele,C4,null,same
+A,Trials_1,3,trial,diff,C4_Tele_a351.wav,C4_Tele_a351m.wav,Tele,C4,"Now you will no longer be given the correct answer, but you will see feedback after each response.\n\nDo your best to answer accurately, but it's ok to guess if you're not sure!",diff
+A,Trials_1,4,trial,diff,C4_Tele_a531.wav,C4_Tele_a531m.wav,Tele,C4,null,diff
+A,Trials_1,5,trial,same,C4_Tele_b315m.wav,C4_Tele_b315m.wav,Tele,C4,null,same
