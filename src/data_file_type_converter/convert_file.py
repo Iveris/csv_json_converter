@@ -3,6 +3,7 @@ from data_file_type_converter.csv_to_json import CsvToJson
 from data_file_type_converter.json_to_csv import JsonToCsv
 import sys
 from argparse import ArgumentParser, Namespace
+from pathlib import Path
 
 class ConvertFile:
     def __init__(self, argv: list[str]):
@@ -11,20 +12,34 @@ class ConvertFile:
     def execute(self) -> int:
         try:
             args: Namespace = self._parse(self.argv)
-            self._input_file = args.file
-            if self._is_csv_file():
-                converter: CsvToJson = CsvToJson()
-            elif self._is_json_file():
-                converter: JsonToCsv = JsonToCsv()
+            if args.dir:
+                self.traverse_directory(args.dir)
+            
             else:
-                raise ValueError("Unexpected file format. Please make sure the file ends with a csv or json suffix.")
-
-            converter.convert(self._input_file)
+                self._input_file = args.file
+                self.convert_file()
 
             return 0
         except Exception as e:
             print(f'Exception {e}')
             return 5
+    
+    def traverse_directory(self, dirname: str) -> void:
+        directory = Path(dirname)
+        for item in directory.iterdir():
+            if item.is_file():
+                self._input_file = str(item)
+                self.convert_file()
+
+    def convert_file(self) -> void:
+        if self._is_csv_file():
+            converter: CsvToJson = CsvToJson()
+        elif self._is_json_file():
+            converter: JsonToCsv = JsonToCsv()
+        else:
+            raise ValueError("Unexpected file format. Please make sure the file ends with a csv or json suffix.")
+
+        converter.convert(self._input_file)
 
     def _is_csv_file(self) -> bool:
         fileparts: list[str] = self._input_file.split('.')
@@ -37,7 +52,8 @@ class ConvertFile:
     @classmethod
     def _parse(cls, argv: list[str]) -> Namespace:
         parser: ArgumentParser = ArgumentParser(prog="convert", description="concert file from csv to json")
-        parser.add_argument('-f', '--file', type=str, required=True)
+        parser.add_argument('-f', '--file', type=str)
+        parser.add_argument('-d', '--dir', type=str)
         return parser.parse_args(argv)
 
 def main(argv: list[str]) -> None:
