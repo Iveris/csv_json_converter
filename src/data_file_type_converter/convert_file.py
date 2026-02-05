@@ -37,7 +37,8 @@ class ConvertFile:
         elif self._is_json_file():
             converter: JsonToCsv = JsonToCsv()
         else:
-            raise ValueError("Unexpected file format. Please make sure the file ends with a csv or json suffix.")
+            print("Unexpected file format. Please make sure the file ends with a csv or json suffix.")
+            return
 
         converter.convert(self._input_file)
 
